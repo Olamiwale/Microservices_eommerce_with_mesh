@@ -4,5 +4,7 @@ terraform/*.tfstate
 terraform/*.tfstate.backup
 
 
-terraform
-monitoring
+terraform/
+monitoring/
+
+.github/workflows/
