@@ -1,8 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: grafana-dashboards
-  namespace: monitoring
-data:
-  app-metrics.json: |
-    { "id": null, "title": "App Metrics Dashboard", ... }
