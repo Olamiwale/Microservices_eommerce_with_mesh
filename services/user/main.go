@@ -1,5 +1,10 @@
 package main
-import ( "encoding/json" "net/http" "os" "sync" )
+import ( 
+  "encoding/json" 
+  "net/http" 
+  "os" 
+  "sync" 
+)
     
 type User struct {
       ID    string `json:"id"`
