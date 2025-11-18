@@ -8,16 +8,21 @@ app.get("/", (req, res) => {
 });
 
 
-app.get("/user-orders", async (req, res) => {
+app.get("/orders", async (req, res) => {
   try {
-    const response = await fetch("http://order-service.k8s.svc.cluster.local/orders");
-    const orders = await response.json();
-    res.json({ user: "John", orders });
+    const response = await fetch("http://order-service/");
+    const data = await response.text();
+    res.json({ 
+      user: "John", 
+      orderServiceResponse: data 
+    });
   } catch (error) {
-    res.status(500).json({ error: "Failed to fetch orders" });
+    res.status(500).json({ error: error.message });
   }
 });
 
+
 app.listen(3000, () => {
   console.log("Server is working on port 3000");
-});
+}); 
+
