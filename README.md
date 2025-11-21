@@ -1,5 +1,5 @@
 
-# Microservices with Istio Mesh Servicr 
+# E-commerce Microservices With Istio Mesh
 
 This is a production-grade microservices e-commerce system showcasing **DevOps best practices, Kubernetes deployments, CI/CD pipelines, and Istio service mesh**.
 
@@ -86,36 +86,36 @@ A simplified file structure:
 
 Ecommerce/
 ├── istio
-│     ├── services/
-│     │       ├── cart/
-│     │       ├── inventory/
-│     │       ├── notification/
-│     │       ├── payment/
-│     │       ├── product/
-│     │       ├── user/
-│     │       ├── order/
-│     │       └── shipping/   
-|     |
-│     └── gateway.yaml          
+│ ├── services
+│ │ ├── cart
+│ │ ├── inventory
+│ │ ├── notification
+│ │ ├── payment
+│ │ ├── product
+│ │ ├── user
+│ │ ├── order
+│ │ └── shipping
+│ └── gateway.yaml
 │
-├── k8s-manifest/
-│      ├── deployment/
-│      └── namespace.yaml
+├── k8s-manifest
+│ ├── deployment
+│ └── namespace.yaml
 │
-├── services/
-│      ├── go-services/
-│      │        ├── payment
-│      │        ├── product
-│      │        └── user
-│      │── node-services/
-│      │       ├── cart
-│      |       └── shipping     
-│      └── python-services/
-│              ├── inventory/
-│              ├── notification/
-│              └── order/ 
+├── services
+│ ├── go-services
+│ │ ├── payment
+│ │ ├── product
+│ │ └── user
+│ ├── node-services
+│ │ ├── cart
+│ │ └── shipping
+│ └── python-services
+│ ├── inventory
+│ ├── notification
+│ └── order
+│
 ├── .gitignore
-└──  README.md
+└── README.md
 
 
 
