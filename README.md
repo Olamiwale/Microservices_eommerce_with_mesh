@@ -1,267 +1,278 @@
-## Microservices E-commerce Platform
 
-This is a microservice-based (e-commerce) designed to demonstrate DevOps best practices using Kubernetes,CI/CD pipelines and istio. The system is composed of seven services: cart,inventory,notification,order,products, payment and shipping, each running in its own container and orchestrated with Kubernetes.
+# Microservices with Istio Mesh Servicr 
 
+This is a production-grade microservices e-commerce system showcasing **DevOps best practices, Kubernetes deployments, CI/CD pipelines, and Istio service mesh**.
 
-Prerequisite
--Programming language - Node.js, Python, Go and Javascript (for building)
--Kubernetes for app orchestration
--docker for containerization
--istio for ingress mesh
-
-## Project Structure
-Services                   Programming-language          Function
-Product Service            Go                            Listing Products    
-Cart Service               Node.js                       Shopping cart management
-Order Service              Python                        Order orchestration
-Payment Service            Go                            Payment processing with 10% simulated failures
-User Service               Go                            User management
-Inventory Service          Python                        Stock management
-Shipping Service           Node.js                       Shipment tracking
-Notification Service       Python                        Event notifications
+The architecture of this project consists **eight services**, each independently deployed, containerized, and managed inside Kubernetes with **full observability, mTLS, canary releases, retries, circuit-breaking, and fault injection**.
 
 
-## Key Features Implemented:
-✅ Istio Service Mesh
-Automatic sidecar injection
-mTLS (STRICT mode) for all service communication
-Envoy proxy for traffic management
+## Tech Stack
 
-✅ Traffic Management
-Canary Deployment: 10% traffic to v2, 90% to v1
-Virtual Services for routing
-Destination Rules for load balancing
-
-✅ Resilience Patterns
-Circuit Breaker: Ejects failing instances after 3 consecutive errors
-Automatic Retries: 3 attempts with 2s timeout
-Timeouts: 10s for critical paths
-Connection Pooling: Limits to prevent resource exhaustion
-
-✅ Fault Injection
-Delay injection (configurable percentage and duration)
-HTTP abort injection (simulated 503 errors)
-Combined fault scenarios
-
-✅ Observability
-Kiali: Service mesh visualization
-Grafana: Metrics dashboards
-Jaeger: Distributed tracing
-Prometheus: Metrics collection
+### **Core Technologies**
+- **Node.js, Python, Go** — Microservice implementation  
+- **Docker** — Containerization  
+- **Kubernetes** — Orchestration  
+- **Istio** — Service Mesh (traffic routing, mTLS, observability)  
+- **Azure Container Registry (ACR)** — Image storage  
+- **Azure Kubernetes Service (AKS)** — Cloud environment  
 
 
-## Step 1. Environment setup (installation and configuration)
--python (link)
--node.js (link)
--go (link)
-- vs code IDE (link)
-- istio installation
-- local registry or (Docker HUb), i used ACR (azure)
+# Microservices Overview
 
--file tree set-up
-
-
-Step 2. Setting up services and test locally
-
-
-step 3. Docker setup
-Docker container were configure for all the service created 
-
-
-## Cloud integration (Azure)
-Step 4
-kubectl get nodes (to test if node is connected and running)
-
-
-step 5 -set up kubernetes deployment and service file
-
-make sure the selector-image of the file is the same as the image you'll build new docker in the next step
-
-
-step 6- build docker image and push to Azure registry
-
-
-# Build Docker image
-docker build -t briitzacr.azurecr.io/order-service:v1
-
-docker build -t briitzacr.azurecr.io/shipping-service:v1
-docker build -t briitzacr.azurecr.io/notification-service:v1
-docker build -t briitzacr.azurecr.io/cart-service:v1
-docker build -t briitzacr.azurecr.io/inventory-service:v1
-
-
-# Log in to Azure Container Registry (ACR)
-az acr login --name <my-acr-name> make sure you're login before pushing.
-
-# Build and Push Docker image to the registry ACR
-docker push briitzacr.azurecr.io/cart-service:v1
-
-docker push briitzacr.azurecr.io/cart-service:v1
+| Service                  | Language  |               Purpose                  |
+|--------------------------|-----------|----------------------------------------|
+| **Product Service**      | Go        | Product listing                        |
+| **Cart Service**         | Node.js   | Shopping cart management               |
+| **Order Service**        | Python    | Order orchestration                    |
+| **Payment Service**      | Go        | Payment processing (+ 10% failure sim) |
+| **User Service**         | Go        | User account management                |
+| **Inventory Service**    | Python    | Stock and supply management            |
+| **Shipping Service**     | Node.js   | Shipment tracking                      |
+| **Notification Service** | Python    | Event-driven notifications             |
 
 
 
+## Istio Features Implemented
 
-step 7 - set up namespace, deployment and service file and apply all
+### **Service Mesh**
+    - Automatic Envoy sidecar injection  
+    - mTLS (STRICT mode) for all internal communication  
+    - Authentication & encryption inside mesh  
+    - Internal routing using VirtualServices  
 
-kubectl apply -f cart/deployment-v1.yaml
+### **Traffic Management**
+    - Canary deployments (90% v1 / 10% v2)  
+    - Subset-based routing via DestinationRules  
+    - Load balancing (ROUND_ROBIN)  
+    - Ingress routing through a single Istio Gateway  
 
-(For canary deployment v2 is created)
-kubectl apply -f cart/deployment-v2.yaml
+### **Resilience Patterns**
+    - Circuit breaking  
+    - Outlier detection (ejects bad pods)  
+    - Automatic retries (3 attempts, 2s timeout)  
+    - Global timeouts for stability  
+    - Connection pooling to avoid saturation  
 
-kubectl apply -f cart/service.yaml
+### **Fault Injection**
+    - Delay injection  
+    - HTTP aborts (503 error simulation)  
+    - Controlled chaos testing  
 
-Note: Service type must be set to clusterIP because istio handles the service within the cluster
+### **Observability**
+   - **Kiali** — Mesh topology & traffic flow  
+   - **Grafana** — Metrics dashboards  
+   - **Jaeger** — Distributed tracing  
+   - **Prometheus** — Metrics collection  
+
+---
+
+# Prerequisites
+Install the following before starting:
+
+- **Python** — https://www.python.org  
+- **Go** — https://go.dev  
+- **Node.js / npm** — https://nodejs.org  
+- **Docker Desktop** — https://www.docker.com  
+- **VS Code** — https://code.visualstudio.com  
+- **Istio** — https://istio.io/latest/docs/setup/getting-started/  
+- **Azure CLI** — for ACR/AKS deployments  
+
+---
+
+# 📁 Project Setup & File Tree
+
+A simplified file structure:
 
 
-step 8 - check if the apply is successfully build and running
-kubectl get deployment -n namespace
-kubectl get pods -n namespace
+Ecommerce/
+├── istio
+│     ├── services/
+│     │       ├── cart/
+│     │       ├── inventory/
+│     │       ├── notification/
+│     │       ├── payment/
+│     │       ├── product/
+│     │       ├── user/
+│     │       ├── order/
+│     │       └── shipping/   
+|     |
+│     └── gateway.yaml          
+│
+├── k8s-manifest/
+│      ├── deployment/
+│      └── namespace.yaml
+│
+├── services/
+│      ├── go-services/
+│      │        ├── payment
+│      │        ├── product
+│      │        └── user
+│      │── node-services/
+│      │       ├── cart
+│      |       └── shipping     
+│      └── python-services/
+│              ├── inventory/
+│              ├── notification/
+│              └── order/ 
+├── .gitignore
+└──  README.md
 
-kubectl get service -n namespace
+
+
+# Step 1 — Build & Test Services Locally  
+Each service was developed and tested locally using Node.js, Python, or Go to confirm output, routes, and inter-service behavior.
+
+# 🐳 Step 2 — Dockerizing Each Service
+
+  **Log in to ACR**
+
+```bash
+az acr login --name <acr-name>
+```
+ **Build and Push**
+
+```bash
+docker build -t acr-name.azurecr.io/user-service:v1 .
+docker push acr-name.azurecr.io/user-service:v1
+````
+Repeat for all services (cart, order, product, etc.).
 
 
 
+# ☸️ Step 3 — Kubernetes Deployment
 
+Create namespace:
 
+```bash
+kubectl create ns k8s
+```
 
+Apply deployment + service:
 
+```bash
+kubectl apply -f user/deployment-v1.yaml
+kubectl apply -f user/service.yaml
+```
 
+For canary (v2):
 
+```bash
+kubectl apply -f user/deployment-v2.yaml
+```
 
+Check status:
 
-## SETTING UP ISTIO FOR MESH ROUTING
+```bash
+kubectl get deploy -n k8s
+kubectl get pods -n k8s
+kubectl get svc -n k8s
+```
 
--Step-1 Installation
+**Note:** All services use `ClusterIP` because Istio manages traffic internally.
 
-# download latest (Linux/macOS)
+---
+
+# 🌐 Step 4 — Install & Configure Istio
+
+Install Istio:
+
+```bash
 curl -L https://istio.io/downloadIstio | sh -
-
-# move into the new istio directory (example name)
 cd istio-*
-
-# add istioctl to path for this shell session
 export PATH=$PWD/bin:$PATH
+```
 
-# check
-istioctl version
+Install control plane:
 
-
--install Istio control panel
-# demo profile 
+```bash
 istioctl install --set profile=demo -y
+```
 
+Verify:
 
-after verifying istio installation and configuration. three files were created gateway file which handles external traffic of all the services,  Virtualservice (handles retires and timeout of each services) destinationrul and peerauthentication (Encrypts all traffic between your microservices inside the mesh 'user-mtls.yaml') for each microservices
+```bash
+istioctl version
+kubectl get pods -n istio-system
+```
+
+---
+
+# ⚙️ Step 5 — Apply Istio Configuration
+
+Each service receives:
+
+* VirtualService
+* DestinationRule
+* PeerAuthentication
 
 ```
 kubectl apply -f istio/user-virtualservice.yaml
 kubectl apply -f istio/user-destinationrule.yaml
 kubectl apply -f istio/user-peerauthentication.yaml
-
-
 ```
-verify if setup is working 'curl http://<EXTERNAL-IP>/user
-'
 
+Test external access:
 
-## Add observabity and telemetry (promethues, grafana and jaeger)
-
-Run this command to authematically install the tools for observability
----
-kubectl apply -f samples/addons -n istio-system
----
-    
-## Step 2: Monitor Metrics
-Check error rates, latency, and throughput:
-  ```bash
-    # View service mesh metrics in Kiali
-    kubectl port-forward -n istio-system svc/kiali 20001:20001
-    
-    # View Grafana dashboards
-    kubectl port-forward -n istio-system svc/grafana 3000:3000
-    
-    # Check Jaeger traces
-    kubectl port-forward -n istio-system svc/tracing 16686:16686
-    ```
-
-
-
-
-
-
-To list container images stored in **Azure Container Registry (ACR)**, you use the Azure CLI. Here are the key commands:
-
-### 🔑 Steps
-1. **Log in to ACR** (if not already):
-   ```bash
-   az acr login --name <registry-name>
-   ```
-
-2. **List repositories** (top-level image names):
-   ```bash
-   az acr repository list --name <registry-name> --output table
-   ```
-
-3. **List tags for a specific repository** (versions of an image):
-   ```bash
-   az acr repository show-tags --name <registry-name> --repository <image-name> --output table
-   ```
-
-4. **Show details of an image**:
-   ```bash
-   az acr repository show-manifests --name <registry-name> --repository <image-name> --output table
-   ```
-
-### ⚡ Example
-If your registry is `briitzacr` and you want to see all images:
 ```bash
-az acr repository list --name briitzacr --output table
+curl http://<INGRESS-IP>/user
 ```
 
-To see all tags of `order-service`:
-```bash
-az acr repository show-tags --name briitzacr --repository order-service --output table
+---
+
+# 📊 Step 6 — Observability
+
+Port-forward or use ingress:
+
+### **Kiali**
+
+```
+istioctl dashboard kiali
 ```
 
-This way you can confirm which versions (e.g., `v5`, `v6`) are available in your ACR.  
+### **Jaeger**
 
-Would you like me to also show you how to **delete old tags/images** from ACR to keep it clean?
-
-
-
-
-
-Your current Dockerfile only copies `main.py` and doesn’t install any dependencies, which is why Flask is missing. You need to add a `pip install` step. Here’s the corrected minimal version:
-
-```dockerfile
-# Use an official Python runtime as a parent image
-FROM python:3.12-slim
-
-# Set working directory
-WORKDIR /app
-
-# Copy the Python script into the container
-COPY main.py .
-
-# Install required libraries directly
-RUN pip install flask requests
-
-# Command to run your app
-CMD ["python", "main.py"]
+```
+istioctl dashboard jaeger
 ```
 
-### Next steps
-1. Save this updated Dockerfile.  
-2. Rebuild and push the image:  
-   ```bash
-   docker build -t briitzacr.azurecr.io/order-service:v6 .
-   docker push briitzacr.azurecr.io/order-service:v6
-   ```
-3. Update your deployment to use the new image:  
-   ```bash
-   kubectl set image deployment/order-deployment-v1 order-service=briitzacr.azurecr.io/order-service:v6 -n k8s
-   ```
+### **Prometheus**
 
-That will ensure Flask and requests are installed, so the container won’t crash on startup.  
+```
+istioctl dashboard prometheus
+```
 
-Would you like me to also show you how to extend this so you can add more libraries later without editing the Dockerfile each time?
+### **Grafana**
+
+```
+istioctl dashboard grafana
+```
+
+
+# 🌈 Completed Features
+
+✔ 7 microservices
+✔ Kubernetes deployments
+✔ ACR image hosting
+✔ Canary rollout with v1/v2
+✔ Full Istio mesh
+✔ mTLS STRICT mode
+✔ Circuit breaking + retries + timeouts
+✔ Fault injection tests
+✔ Observability suite
+
+---
+
+# 📌 Future Improvements
+
+* API Gateway / BFF layer
+* CI/CD automation with GitHub Actions
+* Autoscaling using KEDA
+* Distributed caching (Redis or Memcached)
+* Event-driven architecture with Kafka
+
+---
+
+# 🏁 Final Notes
+
+This project demonstrates **real-world DevOps, SRE, and microservice patterns** used in production systems.
+It is suitable for **portfolio, interviews, cloud engineering practice, and Kubernetes learning**.
