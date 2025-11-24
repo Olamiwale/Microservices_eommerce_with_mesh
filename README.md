@@ -269,7 +269,7 @@ istioctl dashboard kiali
 
 ### **Grafana**
 
-![Kalia-screenshot](./z-image/grafana.png)
+![grafana-screenshot](./z-image/grafana-dash.png)
 
 
 #### Completed Features
