@@ -141,36 +141,35 @@ Verify:
 A simplified file structure:
 
 ```
-Ecommerce/
+E-commerce/
 ├── istio
-│ ├── services
-│ │ ├── cart
-│ │ ├── inventory
-│ │ ├── notification
-│ │ ├── payment
-│ │ ├── product
-│ │ ├── user
-│ │ ├── order
-│ │ └── shipping
-│ └── gateway.yaml
+│     ├── services
+│     │     ├── cart
+│     │     ├── inventory
+│     │     ├── notification
+│     │     ├── payment
+│     │     ├── product
+│     │     ├── user
+│     │     ├── order
+│     │     └── shipping
+│     └── gateway.yaml
 │
 ├── k8s-manifest
-│ ├── deployment
-│ └── namespace.yaml
+│     ├── deployment/
+│     └── namespace.yaml
 │
 ├── services
-│ ├── go-services
-│ │ ├── payment
-│ │ ├── product
-│ │ └── user
-│ ├── node-services
-│ │ ├── cart
-│ │ └── shipping
-│ └── python-services
-│ ├── inventory
-│ ├── notification
-│ └── order
-│
+│     ├── go-services
+│     │     ├── payment
+│     │     ├── product
+│     │     └── user
+│     ├── node-services
+│     │     ├── cart
+│     │     └── shipping
+│     └── python-services
+│           ├── inventory
+│           ├── notification
+│           └── order
 ├── .gitignore
 └── README.md
 
@@ -274,7 +273,7 @@ istioctl dashboard kiali
 
 #### Completed Features
 
-✔ 7 microservices
+✔ 8 microservices
 ✔ Kubernetes deployments
 ✔ ACR image hosting
 ✔ Canary rollout with v1/v2
