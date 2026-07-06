@@ -1,8 +1,0 @@
-# k8s/overlays/dev/patches/hpa-patch.yaml
-apiVersion: autoscaling/v2
-kind: HorizontalPodAutoscaler
-metadata:
-  name: product-service-hpa
-spec:
-  minReplicas: 1
-  maxReplicas: 2

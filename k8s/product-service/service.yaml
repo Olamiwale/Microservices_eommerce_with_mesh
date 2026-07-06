@@ -1,0 +1,15 @@
+# k8s/base/service.yaml
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: product-service
+  namespace: dev
+spec:
+  selector:
+    app: product-service
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+  type: ClusterIP
