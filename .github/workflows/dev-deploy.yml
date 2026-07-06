@@ -81,6 +81,9 @@ jobs:
             - name: Update Kube config
               run: aws eks update-kubeconfig --region ${{ env.AWS_REGION }} --name ${{ env.EKS_CLUSTER }}
 
+            - name: Create namespace if it doesn't exist
+              run: kubectl create namespace dev --dry-run=client -o yaml | kubectl apply -f -
+
 
 
             #---------------- Deploy to EKS --------------------------
