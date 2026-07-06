@@ -307,3 +307,7 @@ DEVOPS ENGINEER
 ✅ Operation ( Monitoring, Incident response,Cost optimization)
 
 
+Connecting to aws cluster - ws eks update-kubeconfig --region us-east-1 --name dev-ecommerce-cluster
+ 
+
+aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 234073095486.dkr.ecr.us-east-1.amazonaws.com
