@@ -23,8 +23,8 @@ jobs:
                       path: app/go-services/product
                     - service: payment-service
                       path: app/go-services/payment
-                    - service: user-service
-                      path: app/go-services/user
+                    # - service: user-service
+                    #   path: app/go-services/user
                     
 
                     # - service: cart-service
