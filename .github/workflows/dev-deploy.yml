@@ -57,15 +57,12 @@ jobs:
                 aws-region: ${{ env.AWS_REGION }}
 
 
-              
-
+            
             - name: Login to ECR
               id: login-ecr
               uses: aws-actions/amazon-ecr-login@v1
 
 
-
-              
 
             - name: Build, tag and push Docker image
               env:
@@ -81,15 +78,24 @@ jobs:
             - name: Update Kube config
               run: aws eks update-kubeconfig --region ${{ env.AWS_REGION }} --name ${{ env.EKS_CLUSTER }}
 
-            - name: Create namespace if it doesn't exist
+
+            - name: Create namespace
               run: kubectl create namespace dev --dry-run=client -o yaml | kubectl apply -f -
 
 
-
-            #---------------- Deploy to EKS --------------------------
-
-            - name: Deploy to EKS
+            - name: Update Deployment Image
               env:
                 ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
                 IMAGE_TAG: ${{ github.sha }}
-              run: kubectl set image deployment/${{ matrix.service }} ${{matrix.service}}=$ECR_REGISTRY/${{matrix.service}}:${IMAGE_TAG-dev} --namespace=dev
+              run: |
+                sed -i "s|image: .*|image: $ECR_REGISTRY/${{ matrix.service }}:$IMAGE_TAG|" k8s/${{ matrix.service }}/deployment.yaml
+
+            - name: Deploy to EKS
+              run: kubectl apply -f k8s/${{ matrix.service }}/
+
+            - name: Wait for Rollout
+              run: kubectl rollout status deployment/${{ matrix.service }} -n dev
+
+
+
+              
