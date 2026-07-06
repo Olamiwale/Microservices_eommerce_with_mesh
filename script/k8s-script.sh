@@ -1,44 +1,90 @@
 echo "setting up k8s manifest...."
 
 
+echo "Setting up Kubernetes Kustomize manifests..."
+
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 
-# Base directories
-mkdir -p "$ROOT_DIR/k8s/namespaces"
-mkdir -p "$ROOT_DIR/k8s/services"
-mkdir -p "$ROOT_DIR/k8s/ingress"
-mkdir -p "$ROOT_DIR/k8s/configmaps"
+mkdir -p "$ROOT_DIR/k8s"
 
-# Namespace
-touch "$ROOT_DIR/k8s/namespaces/namespaces.yaml"
+# Base
+mkdir -p "$ROOT_DIR/k8s/base"
+touch "$ROOT_DIR/k8s/base/deployment.yaml"
+touch "$ROOT_DIR/k8s/base/service.yaml"
+touch "$ROOT_DIR/k8s/base/hpa.yaml"
+touch "$ROOT_DIR/k8s/base/kustomization.yaml"
+touch "$ROOT_DIR/k8s/base/configmap.yaml"
+touch "$ROOT_DIR/k8s/base/ingress.yaml"
 
-# Services
-services=(
-  product-service
-  cart-service
-  order-service
-  payment-service
-  user-service
-  inventory-service
-  shipping-service
-  notification-service
-)
+# Overlays
+mkdir -p "$ROOT_DIR/k8s/overlays"
 
-for service in "${services[@]}"; do
-    mkdir -p "$ROOT_DIR/k8s/services/$service"
+# Development
+mkdir -p "$ROOT_DIR/k8s/overlays/dev"
+mkdir -p "$ROOT_DIR/k8s/overlays/dev/patches"
 
-    touch "$ROOT_DIR/k8s/services/$service/deployment.yaml"
-    touch "$ROOT_DIR/k8s/services/$service/service.yaml"
-    touch "$ROOT_DIR/k8s/services/$service/hpa.yaml"
-done
+touch "$ROOT_DIR/k8s/overlays/dev/deployment-patch.yaml"
+touch "$ROOT_DIR/k8s/overlays/dev/hpa-patch.yaml"
+touch "$ROOT_DIR/k8s/overlays/dev/kustomization.yaml"
 
-# Ingress
-touch "$ROOT_DIR/k8s/ingress/ingress.yaml"
+# Staging
+mkdir -p "$ROOT_DIR/k8s/overlays/staging"
+mkdir -p "$ROOT_DIR/k8s/overlays/staging/patches"
 
-# ConfigMap
-touch "$ROOT_DIR/k8s/configmaps/configmap.yaml"
+touch "$ROOT_DIR/k8s/overlays/staging/deployment-patch.yaml"
+touch "$ROOT_DIR/k8s/overlays/staging/hpa-patch.yaml"
+touch "$ROOT_DIR/k8s/overlays/staging/kustomization.yaml"
 
-echo "Kubernetes manifests created successfully."
+# Production
+mkdir -p "$ROOT_DIR/k8s/overlays/prod"
+mkdir -p "$ROOT_DIR/k8s/overlays/prod/patches"
+
+touch "$ROOT_DIR/k8s/overlays/prod/deployment-patch.yaml"
+touch "$ROOT_DIR/k8s/overlays/prod/hpa-patch.yaml"
+touch "$ROOT_DIR/k8s/overlays/prod/kustomization.yaml"
+
+echo "Kustomize manifest structure created successfully"
+
+
+
+# ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+
+# # Base directories
+# mkdir -p "$ROOT_DIR/k8s/namespaces"
+# mkdir -p "$ROOT_DIR/k8s/services"
+# mkdir -p "$ROOT_DIR/k8s/ingress"
+# mkdir -p "$ROOT_DIR/k8s/configmaps"
+
+# # Namespace
+# touch "$ROOT_DIR/k8s/namespaces/namespaces.yaml"
+
+# # Services
+# services=(
+#   product-service
+#   cart-service
+#   order-service
+#   payment-service
+#   user-service
+#   inventory-service
+#   shipping-service
+#   notification-service
+# )
+
+# for service in "${services[@]}"; do
+#     mkdir -p "$ROOT_DIR/k8s/services/$service"
+
+#     touch "$ROOT_DIR/k8s/services/$service/deployment.yaml"
+#     touch "$ROOT_DIR/k8s/services/$service/service.yaml"
+#     touch "$ROOT_DIR/k8s/services/$service/hpa.yaml"
+# done
+
+# # Ingress
+# touch "$ROOT_DIR/k8s/ingress/ingress.yaml"
+
+# # ConfigMap
+# touch "$ROOT_DIR/k8s/configmaps/configmap.yaml"
+
+# echo "Kubernetes manifests created successfully."
 
 
 
@@ -49,35 +95,6 @@ echo "Kubernetes manifests created successfully."
 #kustomize
 
 
-# echo "Setting up Kubernetes Kustomize manifests..."
-
-# ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-
-# mkdir -p "$ROOT_DIR/k8s"
-
-# # Base
-# mkdir -p "$ROOT_DIR/k8s/base"
-# touch "$ROOT_DIR/k8s/base/deployment.yaml"
-# touch "$ROOT_DIR/k8s/base/service.yaml"
-# touch "$ROOT_DIR/k8s/base/hpa.yaml"
-# touch "$ROOT_DIR/k8s/base/kustomization.yaml"
-
-# # Overlays
-# mkdir -p "$ROOT_DIR/k8s/overlays"
-
-# # Development
-# mkdir -p "$ROOT_DIR/k8s/overlays/dev"
-# touch "$ROOT_DIR/k8s/overlays/dev/kustomization.yaml"
-
-# # Staging
-# mkdir -p "$ROOT_DIR/k8s/overlays/staging"
-# touch "$ROOT_DIR/k8s/overlays/staging/kustomization.yaml"
-
-# # Production
-# mkdir -p "$ROOT_DIR/k8s/overlays/prod"
-# touch "$ROOT_DIR/k8s/overlays/prod/kustomization.yaml"
-
-# echo "Kustomize manifest structure created successfully."
 
 
 
