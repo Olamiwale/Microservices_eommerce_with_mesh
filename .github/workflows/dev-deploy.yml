@@ -21,24 +21,24 @@ jobs:
             
                     - service: product-service
                       path: app/go-services/product-service
-                    - service: payment-service
-                      path: app/go-services/payment-service
-                    - service: user-service
-                      path: app/go-services/user-service
+                    # - service: payment-service
+                    #   path: app/go-services/payment-service
+                    # - service: user-service
+                    #   path: app/go-services/user-service
                     
 
-                    - service: cart-service
-                      path: app/node-services/cart-service
-                    - service: shipping-service
-                      path: app/node-services/shipping-service
+                    # - service: cart-service
+                    #   path: app/node-services/cart-service
+                    # - service: shipping-service
+                    #   path: app/node-services/shipping-service
 
                     
-                    - service: order-service
-                      path: app/python-services/order-service
-                    - service: inventory-service
-                      path: app/python-services/inventory-service
-                    - service: notification-service
-                      path: app/python-services/notification-service
+                    # - service: order-service
+                    #   path: app/python-services/order-service
+                    # - service: inventory-service
+                    #   path: app/python-services/inventory-service
+                    # - service: notification-service
+                    #   path: app/python-services/notification-service
                       
 
 
