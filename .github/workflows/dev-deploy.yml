@@ -21,8 +21,8 @@ jobs:
             
                     - service: product-service
                       path: app/go-services/product
-                    # - service: payment-service
-                    #   path: app/go-services/payment-service
+                    - service: payment-service
+                      path: app/go-services/payment-service
                     # - service: user-service
                     #   path: app/go-services/user-service
                     
@@ -73,7 +73,7 @@ jobs:
                 docker push $ECR_REGISTRY/${{ matrix.service }}:${IMAGE_TAG-dev}
 
 
-            #---------------- Update Kube config --------------------------
+          
 
             - name: Update Kube config
               run: aws eks update-kubeconfig --region ${{ env.AWS_REGION }} --name ${{ env.EKS_CLUSTER }}
